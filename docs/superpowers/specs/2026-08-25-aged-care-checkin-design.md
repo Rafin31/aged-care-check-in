@@ -234,6 +234,11 @@ aged-care-checkin/
   reference; BUILD_LOG.md is narrative, for blog/portfolio reuse)
 
 **Git rules**
+- **Commit/push gate:** Claude never commits or pushes on its own initiative
+  mid-task. It commits/pushes only after (1) the relevant tests/build pass,
+  AND (2) Asif has confirmed the checkpoint ("make sense? any errors?") for
+  that step. Passing tests alone is not enough — Asif's explicit go-ahead is
+  required before any commit or push.
 - Trunk-based development: `main` always deployable, short-lived
   `feature/<name>`, `fix/<name>`, `infra/<name>` branches, PR back to main
   even solo (review checkpoint + clean history for recruiters), squash-merge
