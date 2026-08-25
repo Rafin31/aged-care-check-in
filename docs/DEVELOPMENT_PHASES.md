@@ -4,7 +4,31 @@ Start-to-end build order. Every phase ends with a checkpoint (per CLAUDE.md
 rules: "make sense? any errors?") before moving to the next. Commit/push
 only happens after Asif confirms a phase's checkpoint — never mid-phase.
 
-## Phase 0 — AWS account foundation (manual, Console only)
+Architecture is locked as a blueprint **before** any AWS account work or
+code — Phase 0 draws the diagram from the spec's already-decided data flow,
+not reverse-engineered from what got built.
+
+## Phase 0 — Architecture & diagram lock
+
+Goal: the target-state AWS architecture is fully drawn and approved before
+touching the AWS account or writing any code.
+
+- Draw the full architecture diagram using official AWS Architecture Icons,
+  numbered flow steps, account-boundary box — matching the visual language
+  of the reference image (Kelvin-style industrial diagram)
+- Diagram reflects the data flow already locked in the spec: EventBridge
+  Scheduler -> Step Functions -> Connect -> Transcribe -> Bedrock -> SNS
+  (email) / DynamoDB -> API Gateway -> dashboard
+- Save both an editable source (`docs/architecture-diagram.drawio`) and an
+  export (`docs/architecture-diagram.png`)
+- Asif reviews and approves the diagram — this is the blueprint every later
+  phase builds toward, not a documentation afterthought
+
+Checkpoint: diagram approved by Asif, matches spec exactly, no
+undocumented service on the diagram and no service in the spec missing
+from the diagram.
+
+## Phase 1 — AWS account foundation (manual, Console only)
 
 Goal: safe, ready AWS account before any code is written.
 
@@ -18,7 +42,7 @@ Goal: safe, ready AWS account before any code is written.
 No CDK yet — this phase is 100% Console, by design (teaching-mode rule:
 account-level setup is clicked by hand).
 
-## Phase 1 — Repo & tooling scaffold
+## Phase 2 — Repo & tooling scaffold
 
 Goal: empty but correctly structured repo, nothing deployed yet.
 
@@ -29,11 +53,12 @@ Goal: empty but correctly structured repo, nothing deployed yet.
 - Init CDK app in `infra/` (`cdk init app --language typescript`)
 - Init Next.js app in `web/` with Tailwind + shadcn/ui
 - `.env.example`, `.gitignore`
+- Copy the approved Phase 0 diagram files into `docs/`
 
 Checkpoint: `npm install` and a blank `cdk synth` run clean in `infra/`;
 `npm run dev` boots the blank Next.js app in `web/`.
 
-## Phase 2 — Design system wiring
+## Phase 3 — Design system wiring
 
 Goal: `docs/DESIGN_SYSTEM.md` tokens live in code, nothing else built yet.
 
@@ -43,16 +68,17 @@ Goal: `docs/DESIGN_SYSTEM.md` tokens live in code, nothing else built yet.
 
 Checkpoint: colors/fonts visibly match the design doc in the browser.
 
-## Phase 3 — Data layer
+## Phase 4 — Data layer
 
 Goal: DynamoDB table exists, deployed via CDK, no compute yet.
 
 - `data-stack.ts`: single-table DynamoDB (`PK=personId`, `SK=checkinTimestamp`, GSI for carer lookup)
 - First real `cdk deploy` — Claude walks Asif to the DynamoDB Console afterward to see the created table
 
-Checkpoint: table visible in Console, matches the access-pattern design.
+Checkpoint: table visible in Console, matches the access-pattern design and
+the Phase 0 diagram.
 
-## Phase 4 — Auth
+## Phase 5 — Auth
 
 Goal: Cognito user pool exists, one test user can log in.
 
@@ -62,7 +88,7 @@ Goal: Cognito user pool exists, one test user can log in.
 
 Checkpoint: Asif can log into the (still-empty) dashboard with the test user.
 
-## Phase 5 — Core check-in workflow
+## Phase 6 — Core check-in workflow
 
 Goal: the actual orchestrated flow runs end-to-end for one test person.
 
@@ -79,14 +105,15 @@ Goal: the actual orchestrated flow runs end-to-end for one test person.
 
 Checkpoint: one full manual test run against Asif's own phone number,
 Step Functions console shows the execution graph succeeding, an email
-alert arrives when a distress response is simulated.
+alert arrives when a distress response is simulated. Confirm the deployed
+flow matches the Phase 0 diagram exactly.
 
 This is the highest-risk phase — expect to spend real checkpoint time
 debugging Connect/Transcribe/Bedrock permissions and IAM policies here.
 
-## Phase 6 — Dashboard API + frontend
+## Phase 7 — Dashboard API + frontend
 
-Goal: the Next.js dashboard shows real data from Phase 3-5.
+Goal: the Next.js dashboard shows real data from Phases 4-6.
 
 - `api-stack.ts`: API Gateway + Lambda (`get-checkin-history`,
   `manage-schedule`), Cognito authorizer wired in
@@ -95,9 +122,9 @@ Goal: the Next.js dashboard shows real data from Phase 3-5.
 - `web/lib/api-client.ts` typed fetch wrapper
 
 Checkpoint: logged-in dashboard shows the real check-in history from
-Phase 5's test runs, matching the design system.
+Phase 6's test runs, matching the design system.
 
-## Phase 7 — CI/CD
+## Phase 8 — CI/CD
 
 Goal: push to `main` deploys both infra and frontend automatically.
 
@@ -108,17 +135,17 @@ Goal: push to `main` deploys both infra and frontend automatically.
 
 Checkpoint: a trivial PR merge triggers both pipelines successfully.
 
-## Phase 8 — Observability & cost guardrails
+## Phase 9 — Observability & cost guardrails
 
 Goal: know when something breaks or costs money, before it's a surprise.
 
 - `monitoring-stack.ts`: CloudWatch alarms (Step Functions failures, Lambda
-  errors), confirm billing alarm from Phase 0 is still active
+  errors), confirm billing alarm from Phase 1 is still active
 - Optional: X-Ray tracing across the Step Functions workflow
 
 Checkpoint: intentionally break one Lambda, confirm the CloudWatch alarm fires.
 
-## Phase 9 — Security pass
+## Phase 10 — Security pass
 
 Goal: verify the security rules from the spec were actually followed, not
 just designed.
@@ -130,16 +157,18 @@ just designed.
 
 Checkpoint: security notes added to `docs/well-architected-notes.md`.
 
-## Phase 10 — Well-Architected + diagram
+## Phase 11 — Architecture verification & Well-Architected write-up
 
-Goal: portfolio-facing architecture artifact, built from what's actually deployed.
+Goal: confirm what got built matches the Phase 0 blueprint, and document
+the Well-Architected story.
 
-- Draw the final architecture diagram with official AWS Architecture Icons
-  (now that real resources exist to point icons at)
+- Diff the as-built AWS resources against the Phase 0 diagram — update the
+  diagram only if a deliberate, documented deviation happened during build
+  (log it as an ADR in `docs/decisions/` if so)
 - Fill in `docs/well-architected-notes.md` — map each of the 6 pillars to a
   concrete decision made during the build (not aspirational, actual)
 
-## Phase 11 — Portfolio polish
+## Phase 12 — Portfolio polish
 
 Goal: this is presentable to a recruiter.
 

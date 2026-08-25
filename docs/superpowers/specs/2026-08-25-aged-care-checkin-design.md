@@ -270,11 +270,14 @@ aged-care-checkin/
 
 ## Diagram
 
-Final architecture diagram uses official AWS Architecture Icons, numbered
-components, account-boundary box — same visual language as the reference
-image Asif provided (Kelvin/industrial AWS diagram). Built once code exists
-to point icons at (not before — icons should reflect what's actually
-deployed, not aspirational architecture).
+Architecture is locked as a blueprint **before** any AWS account work or
+code — this is Phase 0 of `docs/DEVELOPMENT_PHASES.md`, not an
+after-the-fact artifact. Final architecture diagram uses official AWS
+Architecture Icons, numbered components, account-boundary box — same
+visual language as the reference image Asif provided (Kelvin/industrial AWS
+diagram). Drawn from the data flow already decided in this spec. Verified
+against the as-built system at Phase 11 (any deviation during build gets
+logged as an ADR and the diagram updated to match).
 
 ## Attribution
 
