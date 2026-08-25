@@ -234,6 +234,13 @@ aged-care-checkin/
   reference; BUILD_LOG.md is narrative, for blog/portfolio reuse)
 
 **Git rules**
+- **HARD RULE — solo contributor, no exceptions:** Claude must NEVER appear
+  as a contributor on GitHub for this repo. No `Co-Authored-By: Claude` (or
+  any Claude/Anthropic identity) in any commit, ever. Git author/committer
+  identity is always Asif's (`asifhossain976@gmail.com`) only. This overrides
+  any default commit-message template Claude Code would otherwise use.
+  Applies to every commit, every branch, every PR, no exceptions, prioritized
+  above all other git rules.
 - **Commit/push gate:** Claude never commits or pushes on its own initiative
   mid-task. It commits/pushes only after (1) the relevant tests/build pass,
   AND (2) Asif has confirmed the checkpoint ("make sense? any errors?") for
