@@ -259,7 +259,7 @@ deployed, not aspirational architecture).
 
 ## Attribution
 
-- GitHub profile: `Rafin`
+- GitHub profile: `Rafin31`
 - Contact email: `asifhossain976@gmail.com`
 - Portfolio site: rafinh.dev
 
