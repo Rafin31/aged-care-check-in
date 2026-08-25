@@ -189,6 +189,13 @@ aged-care-checkin/
 - Purpose, 1-line architecture summary, tech stack version pins
 - Command reference (`npm run deploy` in /infra, `npm run dev` in /web, test commands)
 
+**Design system**
+- All `web/` styling (color, typography, spacing) derives from
+  `docs/DESIGN_SYSTEM.md` — no ad-hoc hex values or fonts introduced
+  elsewhere. Component library: **shadcn/ui** (Radix + Tailwind), not
+  DaisyUI. `--color-signal-alert` is reserved exclusively for real
+  distress/escalation states, never decorative.
+
 **Code conventions**
 - No `any` in TypeScript
 - Zod for runtime validation at Lambda boundaries
