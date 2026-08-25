@@ -46,7 +46,7 @@ account-level setup is clicked by hand).
 
 Goal: empty but correctly structured repo, nothing deployed yet.
 
-- Create GitHub repo `aged-care-checkin` (Asif creates it — Claude never
+- Create GitHub repo `aged-care-check-in` (Asif creates it — Claude never
   owns repo creation/contributor status per the solo-contributor hard rule)
 - Scaffold folder structure from the spec (`infra/`, `web/`, `docs/`, `.github/`)
 - Write `CLAUDE.md` into the repo (rules from spec, finalized)

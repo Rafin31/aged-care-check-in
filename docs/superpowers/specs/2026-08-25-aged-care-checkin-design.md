@@ -16,7 +16,7 @@ standard at portfolio scale.
 ## Repo strategy
 
 One GitHub repo per project (not a monorepo). This spec covers the
-`aged-care-checkin` repo only. Cleaner portfolio links, independent history,
+`aged-care-check-in` repo only. Cleaner portfolio links, independent history,
 matches how AWS Well-Architected reviews scope per-workload anyway.
 
 ## Architecture & data flow
@@ -119,7 +119,7 @@ IAM-adjacent skill on the portfolio, not just app-level auth.
 ## Repo folder structure
 
 ```
-aged-care-checkin/
+aged-care-check-in/
 ├── CLAUDE.md                          # rulebook: design/dev/GitHub rules for Claude Code
 ├── README.md                          # portfolio-facing overview + architecture diagram + demo link
 ├── .gitignore
@@ -138,7 +138,7 @@ aged-care-checkin/
 │
 ├── infra/                             # AWS CDK app (TypeScript)
 │   ├── bin/
-│   │   └── aged-care-checkin.ts       # CDK app entrypoint
+│   │   └── aged-care-check-in.ts       # CDK app entrypoint
 │   ├── lib/
 │   │   ├── network-stack.ts           # VPC (if needed), security groups
 │   │   ├── data-stack.ts              # DynamoDB tables
