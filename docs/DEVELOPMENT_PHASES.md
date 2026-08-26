@@ -15,7 +15,7 @@ touching the AWS account or writing any code.
 
 - Draw the full architecture diagram using official AWS Architecture Icons,
   numbered flow steps, account-boundary box — matching the visual language
-  of the reference image (Kelvin-style industrial diagram)
+  of the reference image (`reference-image-AWS-diagram.png`)
 - Diagram reflects the data flow already locked in the spec: EventBridge
   Scheduler -> Step Functions -> Connect -> Transcribe -> Bedrock -> SNS
   (email) / DynamoDB -> API Gateway -> dashboard
