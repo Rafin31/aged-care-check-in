@@ -33,6 +33,8 @@ from the diagram.
 
 ## Phase 1 — AWS account foundation (manual, Console only)
 
+**✅ Completed — 2026-08-26**
+
 Goal: safe, ready AWS account before any code is written.
 
 - Root account MFA enabled
