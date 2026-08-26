@@ -1,0 +1,42 @@
+# Claude Code local settings — never shared, machine/session-specific
+.claude/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Env files — never commit real secrets, only .env.example is tracked
+.env
+.env.local
+.env.*.local
+
+# Node / npm (infra/ and web/, once scaffolded)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js build output (web/)
+web/.next/
+web/out/
+web/build/
+
+# CDK output (infra/)
+infra/cdk.out/
+infra/cdk.context.json
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Test / coverage output
+coverage/
+
+# AWS credentials — must never be committed
+.aws/
+*.pem
+*.key

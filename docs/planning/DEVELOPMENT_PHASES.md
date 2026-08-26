@@ -2,7 +2,7 @@
 
 Start-to-end build order. Every phase ends with a checkpoint (per CLAUDE.md
 rules: "make sense? any errors?") before moving to the next. Commit/push
-only happens after Asif confirms a phase's checkpoint — never mid-phase.
+only happens after Rafin confirms a phase's checkpoint — never mid-phase.
 
 Architecture is locked as a blueprint **before** any AWS account work or
 code — Phase 0 draws the diagram from the spec's already-decided data flow,
@@ -10,21 +10,24 @@ not reverse-engineered from what got built.
 
 ## Phase 0 — Architecture & diagram lock
 
+**✅ Completed — 2026-08-26** (exact time not logged; this tag added
+retroactively when the phase-completion tracking rule was introduced)
+
 Goal: the target-state AWS architecture is fully drawn and approved before
 touching the AWS account or writing any code.
 
 - Draw the full architecture diagram using official AWS Architecture Icons,
   numbered flow steps, account-boundary box — matching the visual language
-  of the reference image (`reference-image-AWS-diagram.png`)
+  of the reference image (`docs/architecture/reference-image-AWS-diagram.png`)
 - Diagram reflects the data flow already locked in the spec: EventBridge
   Scheduler -> Step Functions -> Connect -> Transcribe -> Bedrock -> SNS
   (email) / DynamoDB -> API Gateway -> dashboard
-- Save both an editable source (`docs/architecture-diagram.drawio`) and an
-  export (`docs/architecture-diagram.png`)
-- Asif reviews and approves the diagram — this is the blueprint every later
+- Save both an editable source (`docs/architecture/architecture-diagram.drawio`)
+  and an export (`docs/architecture/aged-care-check-in-aws-architecture-diagram.png`)
+- Rafin reviews and approves the diagram — this is the blueprint every later
   phase builds toward, not a documentation afterthought
 
-Checkpoint: diagram approved by Asif, matches spec exactly, no
+Checkpoint: diagram approved by Rafin, matches spec exactly, no
 undocumented service on the diagram and no service in the spec missing
 from the diagram.
 
@@ -36,8 +39,9 @@ Goal: safe, ready AWS account before any code is written.
 - Create an IAM user for daily work (never use root day-to-day)
 - Request Bedrock model access (Claude) — this is a manual Console approval step
 - Set up CloudWatch billing alarm at $5
-- Confirm $200 credit + expiry date on the Billing > Free Tier page
-- Note account creation date (Bedrock credit is a 6-month window from there)
+- Credit + expiry already confirmed via Billing > Credits: $100.00 AWS
+  Free Tier, issued 08/26/2026, expires 08/26/2027 — see CLAUDE.md Cost
+  hard rule
 
 No CDK yet — this phase is 100% Console, by design (teaching-mode rule:
 account-level setup is clicked by hand).
@@ -46,8 +50,9 @@ account-level setup is clicked by hand).
 
 Goal: empty but correctly structured repo, nothing deployed yet.
 
-- Create GitHub repo `aged-care-check-in` (Asif creates it — Claude never
-  owns repo creation/contributor status per the solo-contributor hard rule)
+- GitHub repo `aws-aged-care-check-in` already created and pushed by Rafin
+  (Claude never owns repo creation/contributor status per the
+  solo-contributor hard rule)
 - Scaffold folder structure from the spec (`infra/`, `web/`, `docs/`, `.github/`)
 - Write `CLAUDE.md` into the repo (rules from spec, finalized)
 - Init CDK app in `infra/` (`cdk init app --language typescript`)
@@ -60,7 +65,7 @@ Checkpoint: `npm install` and a blank `cdk synth` run clean in `infra/`;
 
 ## Phase 3 — Design system wiring
 
-Goal: `docs/DESIGN_SYSTEM.md` tokens live in code, nothing else built yet.
+Goal: `docs/design/DESIGN_SYSTEM.md` tokens live in code, nothing else built yet.
 
 - Tailwind config: color tokens, font families (Fraunces, Inter, IBM Plex Mono)
 - shadcn/ui initialized, base components themed to the palette
@@ -73,7 +78,7 @@ Checkpoint: colors/fonts visibly match the design doc in the browser.
 Goal: DynamoDB table exists, deployed via CDK, no compute yet.
 
 - `data-stack.ts`: single-table DynamoDB (`PK=personId`, `SK=checkinTimestamp`, GSI for carer lookup)
-- First real `cdk deploy` — Claude walks Asif to the DynamoDB Console afterward to see the created table
+- First real `cdk deploy` — Claude walks Rafin to the DynamoDB Console afterward to see the created table
 
 Checkpoint: table visible in Console, matches the access-pattern design and
 the Phase 0 diagram.
@@ -86,7 +91,7 @@ Goal: Cognito user pool exists, one test user can log in.
 - Console walkthrough: Cognito user pool page, manually create first test user
 - Wire `web/lib/auth.ts` to Cognito, build the login page
 
-Checkpoint: Asif can log into the (still-empty) dashboard with the test user.
+Checkpoint: Rafin can log into the (still-empty) dashboard with the test user.
 
 ## Phase 6 — Core check-in workflow
 
@@ -103,7 +108,7 @@ Goal: the actual orchestrated flow runs end-to-end for one test person.
   the above + EventBridge Scheduler trigger
 - Lambda: `send-alert` (SNS, email only — SMS never enabled per hard rule)
 
-Checkpoint: one full manual test run against Asif's own phone number,
+Checkpoint: one full manual test run against Rafin's own phone number,
 Step Functions console shows the execution graph succeeding, an email
 alert arrives when a distress response is simulated. Confirm the deployed
 flow matches the Phase 0 diagram exactly.
