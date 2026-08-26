@@ -32,13 +32,21 @@ whitespace (not dense newspaper columns).
 | `--color-surface` | `#FFFFFF` | Card and panel backgrounds |
 | `--color-ink` | `#23302B` | Primary text — deep pine-charcoal, softer than pure black |
 | `--color-primary` | `#3B6E64` | Everyday UI: nav, buttons, links, the "all is well" status color |
-| `--color-accent` | `#C97B3B` | Sparse highlight use only — active states, focus rings. Never a large area |
+| `--color-accent` | `#C97B3B` | **Reserved for the moment of live contact** — a call connecting/in progress, plus focus rings (accessibility floor, not a decorative exception). Never a large area, never a static "highlight" for its own sake |
 | `--color-signal-alert` | `#B23A34` | **Reserved exclusively for distress/escalation states.** Never used decoratively — when this color appears anywhere, it means something is actually wrong |
 
 Rule: `--color-signal-alert` may only be triggered by real escalation data
-(no response, distress detected). If a component wants "red" for a purely
-decorative reason, that's a sign the design has drifted — stop and re-check
-against this table.
+(no response, distress detected). `--color-accent` may only be triggered by
+an actual live call state (connecting/in progress) or a focus ring. If a
+component wants "red" or "warm highlight" for a purely decorative reason,
+that's a sign the design has drifted — stop and re-check against this table.
+
+Why anchored this way: this product's most characteristic mechanic is a
+phone call, not a form submission. Both signal colors now mean something
+specific happening in the real world (a call is live / something is wrong),
+never decoration — the accent isn't just "warm" for atmosphere, it's tied to
+the instant a call connects, the same way `--color-signal-alert` is tied to
+real distress data.
 
 ## Typography
 
@@ -46,7 +54,7 @@ against this table.
 |---|---|---|
 | Display | **Fraunces** | Ultra-restrained — app name/logo and page-section headers only. Never body copy, never data. |
 | Body | **Inter** | All UI text, labels, descriptions — carries the whole interface, chosen for legibility since this is health-adjacent information |
-| Data / mono | **IBM Plex Mono** | Timestamps, sentiment scores, any numeric/tabular value |
+| Data / mono | **IBM Plex Mono** | Timestamps, sentiment scores, any numeric/tabular value, and the live-call elapsed-time ticker on the vitals strip |
 
 Type scale (Tailwind-compatible steps): `text-xs` (12px) for captions/labels,
 `text-sm` (14px) body default, `text-base` (16px) primary reading text,
@@ -80,12 +88,21 @@ recent check-ins, styled like a heartbeat-monitor readout:
 - Filled teal (`--color-primary`) dot = responded, no distress
 - Filled brick-red (`--color-signal-alert`) dot = distress detected or no response
 - Hollow/outline dot = check-in not yet occurred (scheduled, future)
+- **Pulsing accent (`--color-accent`) dot = call is live right now** — the
+  only place this color appears outside a focus ring. Next to it, an
+  elapsed-time readout in IBM Plex Mono (`0:42`, ticking) — set exactly like
+  a phone call's duration display, because that's literally what's
+  happening. The moment the call ends, the dot resolves to teal or
+  brick-red per the outcome and the ticker disappears — the accent color
+  only ever exists for the duration of an actual live call.
 
 This is the one memorable, domain-specific visual the app is built around.
 It is not decorative — every dot is real data (structure is information,
 not a generic 01/02/03 numbered-step device, since check-ins are actual
 sequential timestamps, so numbering-as-sequence is earned here, not
-borrowed).
+borrowed). The live-call state ties the strip directly to this product's
+actual mechanism (Connect places a real outbound call) rather than reading
+as a generic status-dot pattern any dashboard could have.
 
 ## Component library
 
