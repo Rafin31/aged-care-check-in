@@ -50,6 +50,8 @@ account-level setup is clicked by hand).
 
 ## Phase 2 — Repo & tooling scaffold
 
+**✅ Completed — 2026-08-27 12:44**
+
 Goal: empty but correctly structured repo, nothing deployed yet.
 
 - GitHub repo `aws-aged-care-check-in` already created and pushed by Rafin
