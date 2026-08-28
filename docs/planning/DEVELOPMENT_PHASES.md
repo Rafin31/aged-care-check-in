@@ -69,10 +69,15 @@ Checkpoint: `npm install` and a blank `cdk synth` run clean in `infra/`;
 
 ## Phase 3 — Design system wiring
 
+**✅ Completed — 2026-08-28**
+
 Goal: `docs/design/DESIGN_SYSTEM.md` tokens live in code, nothing else built yet.
 
 - Tailwind config: color tokens, font families (Fraunces, Inter, IBM Plex Mono)
 - shadcn/ui initialized, base components themed to the palette
+- Dark palette prepared in the same tokens file (`.dark` block) alongside
+  light — same hue family, no toggle built yet, groundwork for a future
+  theme switch
 - One throwaway page proving the tokens render correctly (deleted after)
 
 Checkpoint: colors/fonts visibly match the design doc in the browser.

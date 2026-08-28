@@ -48,6 +48,28 @@ never decoration — the accent isn't just "warm" for atmosphere, it's tied to
 the instant a call connects, the same way `--color-signal-alert` is tied to
 real distress data.
 
+### Dark palette (prepared, not yet activated)
+
+Same semantics as the light table above, same hue family, tuned for
+contrast on a dark background. Lives in the same single tokens file
+(`web/src/app/globals.css`, `.dark` block) so it's ready the moment a
+theme toggle is built — no toggle exists yet, this is groundwork only.
+
+| Token | Hex | Use |
+|---|---|---|
+| `--color-bg` | `#161F1A` | Page background — dark pine-charcoal, same sage-green undertone as the light bg, not pure black |
+| `--color-surface` | `#1E2A24` | Card and panel backgrounds |
+| `--color-ink` | `#E7ECE6` | Primary text — soft off-white, not pure white |
+| `--color-primary` | `#6FBFAE` | Everyday UI: nav, buttons, links, "all is well" status — brightened teal for AA contrast on the dark bg |
+| `--color-accent` | `#E0964F` | Live-call state + focus rings only, same rule as light mode — brightened orange for dark-bg contrast |
+| `--color-signal-alert` | `#E2564C` | Distress/escalation only, same rule as light mode — brightened brick-red for dark-bg contrast |
+
+Same reservation rules apply: `--color-signal-alert` only for real
+escalation data, `--color-accent` only for a live call or a focus ring.
+Full AA contrast verification happens when a theme toggle actually ships
+(not part of Phase 3) — these values were chosen to already be in the
+right range, not final-audited.
+
 ## Typography
 
 | Role | Typeface | Use |
