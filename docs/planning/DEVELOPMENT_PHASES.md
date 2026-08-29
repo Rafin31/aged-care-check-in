@@ -84,6 +84,8 @@ Checkpoint: colors/fonts visibly match the design doc in the browser.
 
 ## Phase 4 — Data layer
 
+**✅ Completed — 2026-08-29 09:53**
+
 Goal: DynamoDB table exists, deployed via CDK, no compute yet.
 
 - `data-stack.ts`: single-table DynamoDB (`PK=personId`, `SK=checkinTimestamp`, GSI for carer lookup)
