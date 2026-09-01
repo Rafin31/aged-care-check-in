@@ -3,7 +3,7 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
 export class DataStack extends cdk.Stack {
-  public readonly checkInTable: dynamodb.Table;
+  public readonly checkInTable: dynamodb.Table; // the table object is needed by the API stack to grant access to the Lambda function
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
