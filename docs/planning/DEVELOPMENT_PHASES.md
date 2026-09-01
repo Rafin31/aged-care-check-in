@@ -96,6 +96,8 @@ the Phase 0 diagram.
 
 ## Phase 5 — Auth
 
+**✅ Completed — 2026-09-01**
+
 Goal: Cognito user pool exists, one test user can log in.
 
 - `auth-stack.ts`: Cognito user pool + app client
